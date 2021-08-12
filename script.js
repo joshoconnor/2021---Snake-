@@ -1,5 +1,5 @@
 const playArea = document.querySelector("#playArea");
-const gridWidth = 10;
+const gridWidth = 30;
 const gameSpeed = 200;
 const snake = [
     [gridWidth / 2, gridWidth / 2],
@@ -122,6 +122,7 @@ const checkSelfSnakeBite = () => {
 // Ends the game
 const endGame = () => {
     clearInterval(gameClock);
+    startButton.innerHTML = "Restart";
     startButton.classList.remove("active");
 };
 
