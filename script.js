@@ -5,8 +5,9 @@ const snake = [
     [gridWidth / 2, gridWidth / 2],
     [gridWidth / 2, (gridWidth / 2) - 1]
 ];
-var intervalID;
-var direction = "right";
+var gameClock;
+var proposedDirection = "right";
+var lastDirection = "right";
 var snakeEating = "false";
 
 // Creates the grid with x and y coordinates
@@ -22,10 +23,10 @@ for(let i = 0; i < (gridWidth * gridWidth); i++) {
 const startGame = () => {
     renderSnake();
     placeFruit();
-    intervalID = setInterval(addTime, gameSpeed);
+    gameClock = setInterval(addTime, gameSpeed);
 };
 
-// Creates the gameclock
+// Creates the game cycle
 const addTime = () => {
     moveSnake();
     checkSelfSnakeBite();
@@ -49,18 +50,22 @@ const moveSnake = () => {
     // adds a copy of the head to the front of the snake array
     snake.unshift(snake[0].slice());
     // sets the coordinates of the head based on the current direction and postition of the snake
-    switch(direction) {
+    switch(proposedDirection) {
         case "right":
             snake[0][1] == gridWidth ? snake[0][1] = 1 : ++snake[0][1];
+            lastDirection = "right";
         break;
         case "left":
             snake[0][1] == 1 ? snake[0][1] = gridWidth : --snake[0][1];
+            lastDirection = "left";
         break;
         case "up":
             snake[0][0] == 1 ? snake[0][0] = gridWidth : --snake[0][0];
+            lastDirection = "up";
         break;
         case "down":
             snake[0][0] == gridWidth ? snake[0][0] = 1 : ++snake[0][0];
+            lastDirection = "down";
     };
     // extends the snake if its eating
     snakeEating == "false" ? snake.pop() : snakeEating = "false";
@@ -77,17 +82,17 @@ const placeFruit = () => {
 // Checks for directional button changes
 document.onkeydown = checkKey;
 function checkKey(e) {
-    if(e.keyCode == '68' && direction != "left") {
-        direction = "right";
+    if(e.keyCode == '68' && lastDirection != "left") {
+        proposedDirection = "right";
     }
-    else if(e.keyCode == '65' && direction != "right") {
-        direction = "left";
+    else if(e.keyCode == '65' && lastDirection != "right") {
+        proposedDirection = "left";
     }
-    else if(e.keyCode == '87' && direction != "down") {
-        direction = "up";
+    else if(e.keyCode == '87' && lastDirection != "down") {
+        proposedDirection = "up";
     }
-    else if(e.keyCode == '83' && direction != "up") {
-        direction = "down";
+    else if(e.keyCode == '83' && lastDirection != "up") {
+        proposedDirection = "down";
     };
 };
 
@@ -101,17 +106,15 @@ const checkFruitEaten = () => {
     };
 };
 
-// Checks if the snake bites itself
+// Checks if the snake bites itself by checking for duplicates in the array
 const checkSelfSnakeBite = () => {
-    // kills snake if it bites itself by checking for duplicates in the array
     let countDuplicates = snake.length - new Set( snake.map(JSON.stringify) ).size;
-    console.log(countDuplicates)
     countDuplicates <= 0 ? renderSnake() : gameStatus = endGame();
 };
 
 // Ends the game
 const endGame = () => {
-    clearInterval(intervalID);
+    clearInterval(gameClock);
 };
 
 // add start and restart buttons
