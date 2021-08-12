@@ -1,0 +1,27 @@
+:root {
+    --play-area-size: 500px;
+}
+
+.play-area {
+    display: grid;
+    grid-gap: 1px;
+    background: black;
+    grid-template-columns: repeat(10, 1fr);
+    border: solid 5px black;
+    width: var(--play-area-size);
+    height: var(--play-area-size);
+    margin: 50px auto;
+}
+
+.pixel {
+    background: white;
+    margin: 0;
+}
+
+.snake {
+    background: green;
+}
+
+.fruit {
+    background: red;
+}
