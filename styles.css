@@ -6,7 +6,7 @@
     display: grid;
     grid-gap: 1px;
     background: black;
-    grid-template-columns: repeat(30, 1fr);
+    grid-template-columns: repeat(20, 1fr);
     border: solid 5px black;
     width: var(--play-area-size);
     height: var(--play-area-size);
@@ -16,9 +16,9 @@
 
 .start-button {
     position: absolute;
-    width: 100px;
+    width: 150px;
     top: calc((var(--play-area-size) / 2) - 25px);
-    left: calc((var(--play-area-size) / 2) - 50px);
+    left: calc((var(--play-area-size) / 2) - 75px);
     background: blue;
     color: white;
     border: solid 3px black;

@@ -1,10 +1,7 @@
 const playArea = document.querySelector("#playArea");
-const gridWidth = 30;
-const gameSpeed = 200;
-const snake = [
-    [gridWidth / 2, gridWidth / 2],
-    [gridWidth / 2, (gridWidth / 2) - 1]
-];
+const gridWidth = 20;
+const gameSpeed = 150;
+const snake = [];
 var gameClock;
 var proposedDirection = "right";
 var lastDirection = "right";
@@ -28,6 +25,13 @@ startButton.addEventListener("click", () => {
 
 // Starts the game
 const startGame = () => {
+    snake.length = 0;
+    snake.unshift(
+        [gridWidth / 2, gridWidth / 2],
+        [gridWidth / 2, (gridWidth / 2) - 1]
+    );
+    let fruit = playArea.querySelector(".fruit");
+    if(fruit != undefined) {fruit.classList.remove("fruit")};
     renderSnake();
     placeFruit();
     gameClock = setInterval(addTime, gameSpeed);
