@@ -19,6 +19,13 @@ for(let i = 0; i < (gridWidth * gridWidth); i++) {
     playArea.append(pixel);
 };
 
+// Creates the start button
+var startButton = document.querySelector(".start-button");
+startButton.addEventListener("click", () => {
+    startButton.classList.add("active");
+    startGame();
+});
+
 // Starts the game
 const startGame = () => {
     renderSnake();
@@ -115,6 +122,7 @@ const checkSelfSnakeBite = () => {
 // Ends the game
 const endGame = () => {
     clearInterval(gameClock);
+    startButton.classList.remove("active");
 };
 
 // add start and restart buttons

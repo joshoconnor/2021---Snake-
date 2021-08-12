@@ -11,6 +11,28 @@
     width: var(--play-area-size);
     height: var(--play-area-size);
     margin: 50px auto;
+    position: relative;
+}
+
+.start-button {
+    position: absolute;
+    width: 100px;
+    top: calc((var(--play-area-size) / 2) - 25px);
+    left: calc((var(--play-area-size) / 2) - 50px);
+    background: blue;
+    color: white;
+    border: solid 3px black;
+    font-size: 25px;
+    padding: 10px;
+}
+
+.start-button:hover {
+    cursor: pointer;
+    background: black;
+}
+
+.start-button.active {
+    display: none;
 }
 
 .pixel {
