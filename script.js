@@ -2,10 +2,17 @@ const playArea = document.querySelector("#playArea");
 const gridWidth = 20;
 const gameSpeed = 150;
 const snake = [];
+const directionalKeys = {
+    "d" : ["left", "right"],
+    "a" : ["right", "left"],
+    "w" : ["down", "up"],
+    "s" : ["up", "down"],
+};
 var gameClock;
 var proposedDirection = "right";
 var lastDirection = "right";
 var snakeEating = "false";
+var score;
 
 // Creates the grid with x and y coordinates
 for(let i = 0; i < (gridWidth * gridWidth); i++) {
@@ -23,8 +30,12 @@ startButton.addEventListener("click", () => {
     startGame();
 });
 
+// Creates the Score
+
+
 // Starts the game
 const startGame = () => {
+    score = 0;
     snake.length = 0;
     snake.unshift(
         [gridWidth / 2, gridWidth / 2],
@@ -91,26 +102,18 @@ const placeFruit = () => {
 };
 
 // Checks for directional button changes
-document.onkeydown = checkKey;
-function checkKey(e) {
-    if(e.keyCode == '68' && lastDirection != "left") {
-        proposedDirection = "right";
-    }
-    else if(e.keyCode == '65' && lastDirection != "right") {
-        proposedDirection = "left";
-    }
-    else if(e.keyCode == '87' && lastDirection != "down") {
-        proposedDirection = "up";
-    }
-    else if(e.keyCode == '83' && lastDirection != "up") {
-        proposedDirection = "down";
+document.addEventListener('keydown', (e) => {
+    if(lastDirection != directionalKeys[e.key][0]) {
+        console.log("yeah you pressed a thing");
+        proposedDirection = directionalKeys[e.key][1]
     };
-};
+}, false)
 
 // Checks if the snake eats the fruit
 const checkFruitEaten = () => {
     let fruit = document.querySelector(".fruit");
     if(fruit.classList.contains("snake")) {
+        score++;
         fruit.classList.remove("fruit");
         snakeEating = "true";
         placeFruit();
