@@ -44,6 +44,14 @@
     background: green;
 }
 
+.head {
+    background: white;
+    background-image: url(assets/snake_head.png);
+    background-size: cover;
+    background-repeat: none;
+
+}
+
 .fruit {
     background: red;
 }

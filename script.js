@@ -57,14 +57,21 @@ const addTime = () => {
 
 // Renders the snake
 const renderSnake = () => {
+    // clears the snake from the board
     let currentPixels = playArea.querySelectorAll(".snake");
     currentPixels.forEach((currentSnakePixel) => {
         currentSnakePixel.classList.remove("snake");
     });
+    let currentSnakeHead = playArea.querySelector(".head");
+    if (currentSnakeHead != undefined) {currentSnakeHead.classList.remove("head");}
+
+    // adds the snake from the array to the board
     snake.forEach((section) => {
-        let snakePixel = document.querySelector(`div[y="${section[0]}"][x="${section[1]}"]`);
-        snakePixel.classList.add("snake");
+        let newSnakePixel = document.querySelector(`div[y="${section[0]}"][x="${section[1]}"]`);
+        newSnakePixel.classList.add("snake");
     });
+    let newSnakeHead = document.querySelector(`div[y="${snake[0][0]}"][x="${snake[0][1]}"]`);
+    newSnakeHead.classList.add("head");
 };
 
 // Moves the snake
@@ -153,3 +160,6 @@ const endGame = () => {
 // corner can become a tail
 
 // tail can become blank
+
+
+// every turn you must clear the head 
