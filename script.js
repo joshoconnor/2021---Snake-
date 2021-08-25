@@ -136,3 +136,21 @@ const endGame = () => {
 // add start and restart buttons
 // add score for each fruit
 // add timer
+
+
+// head - up down right left
+// straight body - up down right left
+// corner - left right
+// tail - up down right left
+
+// head = current direction
+// straight body = current direction
+// corner = next move's direction is not equal to previous move's direction
+
+// heads can become straight body, corner, tail
+
+// straight body can become tail
+
+// corner can become a tail
+
+// tail can become blank
