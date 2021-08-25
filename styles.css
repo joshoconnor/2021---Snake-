@@ -6,7 +6,7 @@
     display: grid;
     grid-gap: 1px;
     background: black;
-    grid-template-columns: repeat(20, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     border: solid 5px black;
     width: var(--play-area-size);
     height: var(--play-area-size);
@@ -40,16 +40,59 @@
     margin: 0;
 }
 
-.snake {
-    background: green;
-}
-
 .head {
     background: white;
     background-image: url(assets/snake_head.png);
     background-size: cover;
-    background-repeat: none;
+}
+.head.right {
+    transform: rotate(90deg);
+}
+.head.left {
+    transform: rotate(-90deg);
+}
+.head.down {
+    transform: rotate(180deg);
+}
 
+.body {
+    background-image: url(assets/snake_body_2.png);
+    background-size: cover;
+}
+.body.right,
+.body.left {
+    transform: rotate(90deg);
+}
+
+.tail {
+    background-image: url(assets/snake_tail_2.png);
+    background-size: cover;
+}
+.tail.right {
+    transform: rotate(90deg);
+}
+.tail.left {
+    transform: rotate(-90deg);
+}
+.tail.down {
+    transform: rotate(180deg);
+}
+
+.corner-oiio,
+.corner-iioo,
+.corner-ooii,
+.corner-iooi {
+    background-image: url(assets/snake_corner_2.png);
+    background-size: cover;
+}
+.corner-oiio {
+    transform: rotate(90deg);
+}
+.corner-ooii {
+    transform: rotate(180deg);
+}
+.corner-iooi {
+    transform: rotate(-90deg);
 }
 
 .fruit {
