@@ -104,7 +104,6 @@ const placeFruit = () => {
 // Checks for directional button changes
 document.addEventListener('keydown', (e) => {
     if(lastDirection != directionalKeys[e.key][0]) {
-        console.log("yeah you pressed a thing");
         proposedDirection = directionalKeys[e.key][1]
     };
 }, false)
