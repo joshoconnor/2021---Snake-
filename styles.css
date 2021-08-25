@@ -4,8 +4,7 @@
 
 .play-area {
     display: grid;
-    grid-gap: 1px;
-    background: black;
+    background: rgb(253, 221, 114);
     grid-template-columns: repeat(10, 1fr);
     border: solid 5px black;
     width: var(--play-area-size);
@@ -15,6 +14,7 @@
 }
 
 .start-button {
+    z-index: 100;
     position: absolute;
     width: 150px;
     top: calc((var(--play-area-size) / 2) - 25px);
@@ -36,27 +36,25 @@
 }
 
 .pixel {
-    background: white;
     margin: 0;
 }
 
 .head {
-    background: white;
-    background-image: url(assets/snake_head.png);
+    background-image: url(assets/snake_head_up.png);
     background-size: cover;
 }
 .head.right {
-    transform: rotate(90deg);
+    background-image: url(assets/snake_head_right.png);
 }
 .head.left {
-    transform: rotate(-90deg);
+    background-image: url(assets/snake_head_left.png);
 }
 .head.down {
-    transform: rotate(180deg);
+    background-image: url(assets/snake_head_down.png);
 }
 
 .body {
-    background-image: url(assets/snake_body_2.png);
+    background-image: url(assets/snake_body.png);
     background-size: cover;
 }
 .body.right,
@@ -65,16 +63,18 @@
 }
 
 .tail {
-    background-image: url(assets/snake_tail_2.png);
+    background-image: url(assets/snake_tail.png);
     background-size: cover;
 }
 .tail.right {
     transform: rotate(90deg);
 }
 .tail.left {
+    background-image: url(/assets/snake_tail_inverse.png);
     transform: rotate(-90deg);
 }
 .tail.down {
+    background-image: url(/assets/snake_tail_inverse.png);
     transform: rotate(180deg);
 }
 
@@ -82,19 +82,20 @@
 .corner-iioo,
 .corner-ooii,
 .corner-iooi {
-    background-image: url(assets/snake_corner_2.png);
+    background-image: url(assets/snake_corner_iioo.png);
     background-size: cover;
 }
 .corner-oiio {
-    transform: rotate(90deg);
+    background-image: url(assets/snake_corner_oiio.png);
 }
 .corner-ooii {
-    transform: rotate(180deg);
+    background-image: url(assets/snake_corner_ooii.png);
 }
 .corner-iooi {
-    transform: rotate(-90deg);
+    background-image: url(assets/snake_corner_iooi.png);
 }
 
 .fruit {
-    background: red;
+    background-image: url(assets/apple.png);
+    background-size: cover;
 }

@@ -86,7 +86,7 @@ const moveSnake = () => {
         direction: proposedDirection,
         bodyPart: "head"
     });
-    if(snake.length >= 4) {whichBodyPart();};
+    if(snake.length >= 3) {whichBodyPart();};
     // sets the coordinates of the head based on the current direction and postition of the snake
     switch(proposedDirection) {
         case "right":
