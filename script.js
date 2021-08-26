@@ -1,3 +1,5 @@
+import whichBodyPart from './modules/whichBodyPart.js';
+
 const playArea = document.querySelector("#playArea");
 const gridWidth = 10;
 const gameSpeed = 200;
@@ -8,11 +10,25 @@ const directionalKeys = {
     "w" : ["down", "up"],
     "s" : ["up", "down"]
 };
-var gameClock;
-var proposedDirection = "right";
-var lastDirection = "right";
-var snakeEating = "false";
-var score;
+// const cornerTypes = {
+//     "right" : {
+//         "up" : "corner-oiio",
+//         "down" : "corner-iioo"
+//     },
+//     "left" : {
+//         "up" : "corner-ooii",
+//         "down" : "corner-iooi"
+//     },
+//     "up" : {
+//         "right" : "corner-iooi",
+//         "left" : "corner-iioo"
+//     },
+//     "down" : {
+//         "right" : "corner-ooii",
+//         "left" : "corner-oiio"
+//     }
+// };
+var gameClock, proposedDirection, lastDirection, snakeEating, score;
 
 // Creates the grid with x and y coordinates
 for(let i = 0; i < (gridWidth * gridWidth); i++) {
@@ -35,22 +51,24 @@ startButton.addEventListener("click", () => {
 
 // Starts the game
 const startGame = () => {
+    snakeEating = "false";
+    proposedDirection = "right";
     score = 0;
     snake.length = 0;
     snake.unshift({
         y: gridWidth / 2,
         x: gridWidth / 2,
-        direction: proposedDirection,
+        direction: "right",
         bodyPart: "head"
     },
     {
         y: gridWidth / 2,
         x: (gridWidth / 2) -1,
-        direction: proposedDirection,
+        direction: "right",
         bodyPart: "tail"
     });
     let fruit = playArea.querySelector(".fruit");
-    if(fruit != undefined) {fruit.classList.remove("fruit")};
+    if(fruit != null) {fruit.classList.remove("fruit")};
     renderSnake();
     placeFruit();
     gameClock = setInterval(addTime, gameSpeed);
@@ -86,25 +104,26 @@ const moveSnake = () => {
         direction: proposedDirection,
         bodyPart: "head"
     });
-    if(snake.length >= 3) {whichBodyPart();};
+
+    whichBodyPart(snake[0], snake[1]);
+
+    let head = snake[0];
     // sets the coordinates of the head based on the current direction and postition of the snake
     switch(proposedDirection) {
         case "right":
-            snake[0].x == gridWidth ? snake[0].x = 1 : ++snake[0].x;
-            lastDirection = "right";
+            head.x == gridWidth ? head.x = 1 : ++head.x;
         break;
         case "left":
-            snake[0].x == 1 ? snake[0].x = gridWidth : --snake[0].x;
-            lastDirection = "left";
+            head.x == 1 ? head.x = gridWidth : --head.x;
         break;
         case "up":
-            snake[0].y == 1 ? snake[0].y = gridWidth : --snake[0].y;
-            lastDirection = "up";
+            head.y == 1 ? head.y = gridWidth : --head.y;
         break;
         case "down":
-            snake[0].y == gridWidth ? snake[0].y = 1 : ++snake[0].y;
-            lastDirection = "down";
+            head.y == gridWidth ? head.y = 1 : ++head.y;
     };
+    lastDirection = proposedDirection;
+    
     // extends the snake if its eating
     if(snakeEating == "false") {
         snake.pop();
@@ -115,54 +134,12 @@ const moveSnake = () => {
     };
 };
 
-// works out what the body part of the section behind the snake's head is
-const whichBodyPart = () => {
-    if(snake[1].direction == snake[0].direction) {
-        snake[1].bodyPart = "body"
-    } else {
-        switch(snake[1].direction) {
-            case "right":
-                switch(snake[0].direction) {
-                    case "up":
-                        snake[1].bodyPart = "corner-oiio"
-                    break;
-                    case "down":
-                        snake[1].bodyPart = "corner-iioo"
-                    break;
-                }
-            break;
-            case "left":
-                switch(snake[0].direction) {
-                    case "up":
-                        snake[1].bodyPart = "corner-ooii"
-                    break;
-                    case "down":
-                        snake[1].bodyPart = "corner-iooi"
-                    break;
-                }
-            break;
-            case "up":
-                switch(snake[0].direction) {
-                    case "right":
-                        snake[1].bodyPart = "corner-iooi"
-                    break;
-                    case "left":
-                        snake[1].bodyPart = "corner-iioo"
-                    break;
-                }
-            break;
-            case "down":
-                switch(snake[0].direction) {
-                    case "right":
-                        snake[1].bodyPart = "corner-ooii"
-                    break;
-                    case "left":
-                        snake[1].bodyPart = "corner-oiio"
-                    break;
-                };
-        };
-    };
-};
+// // works out what the body part of the section behind the snake's head is
+// const whichBodyPart = (head, neck) => {
+//     neck.direction == head.direction
+//     ? neck.bodyPart = "body"
+//     : neck.bodyPart = cornerTypes[neck.direction][head.direction];
+// };
 
 // Place fruit randomly in a square on the board which isn't where the snake is
 const placeFruit = () => {
