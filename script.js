@@ -1,50 +1,27 @@
-import whichBodyPart from './modules/whichBodyPart.js';
+import { gridWidth, gameSpeed, snake } from './modules/settings.js';
+import { renderGrid } from './modules/renderGrid.js';
+import { renderSnake } from './modules/renderSnake.js';
+import { placeFruit } from './modules/placeFruit.js';
+import { determineBodyPart } from './modules/determineBodyPart.js';
 
 const playArea = document.querySelector("#playArea");
-const gridWidth = 10;
-const gameSpeed = 200;
-const snake = [];
 const directionalKeys = {
     "d" : ["left", "right"],
     "a" : ["right", "left"],
     "w" : ["down", "up"],
     "s" : ["up", "down"]
 };
-// const cornerTypes = {
-//     "right" : {
-//         "up" : "corner-oiio",
-//         "down" : "corner-iioo"
-//     },
-//     "left" : {
-//         "up" : "corner-ooii",
-//         "down" : "corner-iooi"
-//     },
-//     "up" : {
-//         "right" : "corner-iooi",
-//         "left" : "corner-iioo"
-//     },
-//     "down" : {
-//         "right" : "corner-ooii",
-//         "left" : "corner-oiio"
-//     }
-// };
+
 var gameClock, proposedDirection, lastDirection, snakeEating, score;
 
-// Creates the grid with x and y coordinates
-for(let i = 0; i < (gridWidth * gridWidth); i++) {
-    let pixel = document.createElement("div");
-    pixel.classList.add("pixel");
-    pixel.setAttribute("y", `${Math.trunc((i / gridWidth) + 1)}`);
-    pixel.setAttribute("x", `${i + 1 <= gridWidth ? i + 1 : (i + 1) - (gridWidth * (pixel.getAttribute("Y") - 1))}`);
-    playArea.append(pixel);
-};
-
 // Creates the start button
+playArea.innerHTML = `<button class="start-button">Start</button>`
 var startButton = document.querySelector(".start-button");
 startButton.addEventListener("click", () => {
     startButton.classList.add("active");
     startGame();
 });
+renderGrid();
 
 // Creates the Score
 
@@ -60,8 +37,7 @@ const startGame = () => {
         x: gridWidth / 2,
         direction: "right",
         bodyPart: "head"
-    },
-    {
+    }, {
         y: gridWidth / 2,
         x: (gridWidth / 2) -1,
         direction: "right",
@@ -81,20 +57,6 @@ const addTime = () => {
     checkFruitEaten();
 };
 
-// Renders the snake
-const renderSnake = () => {
-    // clears the snake from the board
-    let currentPixels = playArea.querySelectorAll(".snake");
-    currentPixels.forEach((currentSnakePixel) => {
-        currentSnakePixel.classList.remove("snake", "left", "right", "up", "down", "head", "tail", "body", "corner-oiio", "corner-iioo", "corner-ooii", "corner-iooi");
-    });
-    // adds the snake from the array to the board
-    snake.forEach((section) => {
-        let newSnakePixel = document.querySelector(`div[y="${section.y}"][x="${section.x}"]`);
-        newSnakePixel.classList.add("snake", `${section.direction}`, `${section.bodyPart}`);
-    });
-};
-
 // Moves the snake
 const moveSnake = () => {
     // adds a copy of the head to the front of the snake array
@@ -105,7 +67,7 @@ const moveSnake = () => {
         bodyPart: "head"
     });
 
-    whichBodyPart(snake[0], snake[1]);
+    determineBodyPart(snake[0], snake[1]);
 
     let head = snake[0];
     // sets the coordinates of the head based on the current direction and postition of the snake
@@ -134,21 +96,6 @@ const moveSnake = () => {
     };
 };
 
-// // works out what the body part of the section behind the snake's head is
-// const whichBodyPart = (head, neck) => {
-//     neck.direction == head.direction
-//     ? neck.bodyPart = "body"
-//     : neck.bodyPart = cornerTypes[neck.direction][head.direction];
-// };
-
-// Place fruit randomly in a square on the board which isn't where the snake is
-const placeFruit = () => {
-    let y = Math.floor(Math.random() * gridWidth) + 1;
-    let x = Math.floor(Math.random() * gridWidth) + 1;
-    let potentialFruitPixel = document.querySelector(`div[y="${y}"][x="${x}"]`);
-    (potentialFruitPixel.classList.contains("snake")) ? placeFruit() : potentialFruitPixel.classList.add("fruit");
-};
-
 // Checks for directional button changes
 document.addEventListener('keydown', (e) => {
     if(!directionalKeys[e.key]) return;
@@ -172,11 +119,11 @@ const checkFruitEaten = () => {
 const checkSelfSnakeBite = () => {
     let snakeCoordinates = []
     snake.forEach(section => {
-        sectionArray = [section.x, section.y];
+        let sectionArray = [section.x, section.y];
         snakeCoordinates.unshift(sectionArray);
     });
     let countDuplicates = snakeCoordinates.length - new Set( snakeCoordinates.map(JSON.stringify) ).size;
-    countDuplicates <= 0 ? renderSnake() : gameStatus = endGame();
+    countDuplicates <= 0 ? renderSnake() : endGame();
 };
 
 // Ends the game
@@ -189,24 +136,3 @@ const endGame = () => {
 // add start and restart buttons
 // add score for each fruit
 // add timer
-
-
-// head - up down right left
-// straight body - up down right left
-// corner - left right
-// tail - up down right left
-
-// head = current direction
-// straight body = current direction
-// corner = next move's direction is not equal to previous move's direction
-
-// heads can become straight body, corner, tail
-
-// straight body can become tail
-
-// corner can become a tail
-
-// tail can become blank
-
-
-// every turn you must clear the head 
