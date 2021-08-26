@@ -6,7 +6,7 @@ const directionalKeys = {
     "d" : ["left", "right"],
     "a" : ["right", "left"],
     "w" : ["down", "up"],
-    "s" : ["up", "down"],
+    "s" : ["up", "down"]
 };
 var gameClock;
 var proposedDirection = "right";
