@@ -39,6 +39,11 @@
     margin: 0;
 }
 
+.fruit {
+    background-image: url(assets/apple.png);
+    background-size: cover;
+}
+
 .head {
     background-image: url(assets/snake_head_up.png);
     background-size: cover;
@@ -93,9 +98,4 @@
 }
 .corner-iooi {
     background-image: url(assets/snake_corner_iooi.png);
-}
-
-.fruit {
-    background-image: url(assets/apple.png);
-    background-size: cover;
 }

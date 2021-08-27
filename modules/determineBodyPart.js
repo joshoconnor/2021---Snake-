@@ -17,10 +17,8 @@ const cornerTypes = {
     }
 };
 
-const whichBodyPart = (head, neck) => {
+export const determineBodyPart = (head, neck) => {
     neck.direction == head.direction
     ? neck.bodyPart = "body"
     : neck.bodyPart = cornerTypes[neck.direction][head.direction];
 };
-
-export default whichBodyPart;
