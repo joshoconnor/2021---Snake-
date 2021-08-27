@@ -75,11 +75,11 @@
     transform: rotate(90deg);
 }
 .tail.left {
-    background-image: url(/assets/snake_tail_inverse.png);
+    background-image: url(assets/snake_tail_inverse.png);
     transform: rotate(-90deg);
 }
 .tail.down {
-    background-image: url(/assets/snake_tail_inverse.png);
+    background-image: url(assets/snake_tail_inverse.png);
     transform: rotate(180deg);
 }
 
